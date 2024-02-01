@@ -95,7 +95,7 @@ module "rds_aurora" {
   log_types               = var.names["${var.env}"]["log_types"]
   publicly_accessible     = var.names["${var.env}"]["publicly_accessible"]
   add_scheduler_tag       = var.names["${var.env}"]["add_scheduler_tag"]
-  lambda_sg               = module.lamba.lambda_sg
+  lambda_sg               = module.lambda.lambda_sg
   odp_db_server_ip        = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["odp-db-server-ip"]
   ingress_rules           = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["ingress_rules"]
 }

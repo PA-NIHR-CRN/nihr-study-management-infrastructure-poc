@@ -7,14 +7,12 @@ on:
        - '*/*'
        - '**'
        - '!main'  
-       - '!develop' 
   pull_request:
     branches:
        - '!main'  
-       - '!develop' 
 jobs:
   terraform:
-    name: 'PR Raise From Any Branch to Develop'
+    name: 'PR Raise From Any Branch to Main'
     runs-on: ubuntu-latest
 
     defaults:

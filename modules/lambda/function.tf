@@ -18,7 +18,7 @@ resource "aws_security_group" "sg_lambda" {
   }
 }
 
-resource "aws_lambda_function" "study_management_lamnbda" {
+resource "aws_lambda_function" "study_management_lambda" {
   function_name = "${var.account}-lambda-${var.env}-${var.system}"
   memory_size   = var.memory_size
   timeout       = 30
@@ -26,7 +26,7 @@ resource "aws_lambda_function" "study_management_lamnbda" {
   publish       = true # don't need this if updating code outside of terrafrom
   filename      = "./modules/.build/lambda_dummy/lambda_dummy.zip"
   role          = aws_iam_role.lambda.arn
-  runtime       = "dotnet7"
+  runtime       = "dotnet6"
 
   vpc_config {
     subnet_ids         = var.private_subnet_ids
@@ -70,7 +70,7 @@ resource "aws_lambda_provisioned_concurrency_config" "study" {
 }
 
 # lambda logging
-resource "aws_cloudwatch_log_group" "study" {
+resource "aws_cloudwatch_log_group" "study_management_log_group" {
   name              = "/aws/lambda/${aws_lambda_function.study_management_lambda.function_name}"
   retention_in_days = var.retention_in_days
   tags = {
