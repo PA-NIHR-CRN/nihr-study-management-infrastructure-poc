@@ -14,7 +14,7 @@ variable "names" {
       "engine_version"        = "8.0.mysql_aurora.3.02.2"
       "instanceclass"         = "db.serverless"
       "skip_final_snapshot"   = true
-      "rds_subnet_ids"        = ["subnet-01e81b505937e0b1c", "subnet-03bfe73d7689edc15", "subnet-07f2fcf41c2929c30"]
+      "private_subnet_ids"    = ["subnet-01e81b505937e0b1c", "subnet-03bfe73d7689edc15", "subnet-07f2fcf41c2929c30"]
       "vpcid"                 = "vpc-05a9b4ad1477b9b86"
       "maintenancewindow"     = "Sat:04:00-Sat:05:00"
       "storageencrypted"      = true
@@ -28,6 +28,8 @@ variable "names" {
       "add_scheduler_tag"     = true
       "whitelist_ips"         = ["0.0.0.0/0"]
       "rds_max_connections"   = "50"
+      "lambda_memory"         = 256
+      "retention_period"      = 30
     }
   }
 }
