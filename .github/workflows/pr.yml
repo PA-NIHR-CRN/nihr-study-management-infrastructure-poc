@@ -1,4 +1,4 @@
-name: 'CI'
+name: 'PR - Terraform Plan DEV'
 
 on:
   push:
