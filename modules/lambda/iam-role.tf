@@ -50,25 +50,25 @@ data "aws_iam_policy_document" "lambda" {
     effect    = "Allow"
     resources = ["arn:aws:sqs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"]
 
-    actions = [
-      "sqs:AddPermission",
-      "sqs:ChangeMessageVisibility",
-      "sqs:CreateQueue",
-      "sqs:DeleteMessage",
-      "sqs:DeleteQueue",
-      "sqs:GetQueueAttributes",
-      "sqs:GetQueueUrl",
-      "sqs:ListDeadLetterSourceQueues",
-      "sqs:ListQueueTags",
-      "sqs:ListQueues",
-      "sqs:PurgeQueue",
-      "sqs:ReceiveMessage",
-      "sqs:RemovePermission",
-      "sqs:SendMessage",
-      "sqs:SetQueueAttributes",
-      "sqs:TagQueue",
-      "sqs:UntagQueue",
-    ]
+    # actions = [
+    #   "sqs:AddPermission",
+    #   "sqs:ChangeMessageVisibility",
+    #   "sqs:CreateQueue",
+    #   "sqs:DeleteMessage",
+    #   "sqs:DeleteQueue",
+    #   "sqs:GetQueueAttributes",
+    #   "sqs:GetQueueUrl",
+    #   "sqs:ListDeadLetterSourceQueues",
+    #   "sqs:ListQueueTags",
+    #   "sqs:ListQueues",
+    #   "sqs:PurgeQueue",
+    #   "sqs:ReceiveMessage",
+    #   "sqs:RemovePermission",
+    #   "sqs:SendMessage",
+    #   "sqs:SetQueueAttributes",
+    #   "sqs:TagQueue",
+    #   "sqs:UntagQueue",
+    # ]
   }
 
   statement {
@@ -107,24 +107,6 @@ data "aws_iam_policy_document" "lambda" {
       "cognito-idp:*"
     ]
     resources = ["*"]
-  }
-
-  #  statement {
-  #    sid    = "CognitoIdenitityemail"
-  #    effect = "Allow"
-  #    actions = [
-  #      "iam:CreateServiceLinkedRole",
-  #    ]
-  #    resources = ["*"]
-  #  }
-
-  statement {
-    sid    = "DyanamoDB"
-    effect = "Allow"
-    actions = [
-      "dynamodb:*"
-    ]
-    resources = ["arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"]
   }
 
   statement {
