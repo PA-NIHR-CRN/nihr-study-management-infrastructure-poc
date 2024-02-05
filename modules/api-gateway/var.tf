@@ -16,3 +16,7 @@ variable "account" {
 variable "invoke_lambda_arn" {
 
 }
+
+variable "stage_name" {
+
+}

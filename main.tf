@@ -34,6 +34,7 @@ module "api_gateway" {
   env               = var.env
   system            = var.names["system"]
   invoke_lambda_arn = module.lambda.study_management_invoke_alias_arn
+  stage_name        = "v1"
 
 }
 
@@ -104,6 +105,8 @@ module "cognito" {
   source        = "./modules/cognito"
   env           = var.env
   system        = var.names["system"]
+  userpool      = "profile-management"
+  client_name   = "edge"
   account       = var.names["${var.env}"]["accountidentifiers"]
   provider-name = var.names["${var.env}"]["provider-name"]
 }

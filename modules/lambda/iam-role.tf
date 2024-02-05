@@ -45,31 +45,6 @@ resource "aws_iam_policy" "lambda" {
 }
 
 data "aws_iam_policy_document" "lambda" {
-  statement {
-    sid       = "AllowSQSPermissions"
-    effect    = "Allow"
-    resources = ["arn:aws:sqs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"]
-
-    # actions = [
-    #   "sqs:AddPermission",
-    #   "sqs:ChangeMessageVisibility",
-    #   "sqs:CreateQueue",
-    #   "sqs:DeleteMessage",
-    #   "sqs:DeleteQueue",
-    #   "sqs:GetQueueAttributes",
-    #   "sqs:GetQueueUrl",
-    #   "sqs:ListDeadLetterSourceQueues",
-    #   "sqs:ListQueueTags",
-    #   "sqs:ListQueues",
-    #   "sqs:PurgeQueue",
-    #   "sqs:ReceiveMessage",
-    #   "sqs:RemovePermission",
-    #   "sqs:SendMessage",
-    #   "sqs:SetQueueAttributes",
-    #   "sqs:TagQueue",
-    #   "sqs:UntagQueue",
-    # ]
-  }
 
   statement {
     sid       = "AllowInvokingLambdas"
@@ -110,17 +85,6 @@ data "aws_iam_policy_document" "lambda" {
   }
 
   statement {
-    sid    = "AllowCreateDeleteNetworkInterface"
-    effect = "Allow"
-    actions = [
-      "ec2:Describe*",
-      "ec2:CreateNetworkInterface",
-      "ec2:DeleteNetworkInterface",
-    ]
-    resources = ["*"]
-  }
-
-  statement {
     sid    = "RDS"
     effect = "Allow"
     actions = [
@@ -144,26 +108,6 @@ data "aws_iam_policy_document" "lambda" {
     effect = "Allow"
     actions = [
       "secretsmanager:ListSecrets",
-    ]
-    resources = ["*"]
-  }
-
-  statement {
-    sid    = "Allowses"
-    effect = "Allow"
-    actions = [
-      "ses:SendEmail",
-      "ses:SendRawEmail",
-    ]
-    resources = ["*"]
-  }
-
-  statement {
-    sid    = "Allowssm"
-    effect = "Allow"
-    actions = [
-      "ssm:PutParameter",
-      "ssm:GetParametersByPath",
     ]
     resources = ["*"]
   }
