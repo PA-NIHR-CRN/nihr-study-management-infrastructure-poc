@@ -30,6 +30,7 @@ variable "names" {
       "rds_max_connections"   = "50"
       "lambda_memory"         = 256
       "retention_period"      = 30
+      "provider-name"         = "ORCID"
     }
   }
 }

@@ -105,5 +105,5 @@ module "cognito" {
   env           = var.env
   system        = var.names["system"]
   account       = var.names["${var.env}"]["accountidentifiers"]
-  provider-name = "ORCID"
+  provider-name = var.names["${var.env}"]["provider-name"]
 }

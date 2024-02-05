@@ -23,10 +23,11 @@ module "aws_cognito_user_pool" {
     {
       name       = "${var.account}-cognito-${var.env}-${var.system}-resource-server"
       identifier = "${var.account}-cognito-${var.env}-${var.system}-resource-server"
-      scope = {
+      scope = [{
         scope_name        = "todo.read"
         scope_description = "Read todo list"
-      }
+        }
+      ]
     }
   ]
 
@@ -106,7 +107,7 @@ module "aws_cognito_user_pool" {
   # identity_providers
   identity_providers = [
     {
-      provider_name = "${var.account}-cognito-${var.env}-${var.system}-userpool"
+      provider_name = var.provider-name
       provider_type = "OIDC"
 
       attribute_mapping = {
