@@ -99,3 +99,11 @@ module "rds_aurora" {
   odp_db_server_ip        = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["odp-db-server-ip"]
   ingress_rules           = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["ingress_rules"]
 }
+
+module "cognito" {
+  source        = "./modules/cognito"
+  env           = var.env
+  system        = var.names["system"]
+  account       = var.names["${var.env}"]["accountidentifiers"]
+  provider-name = "ORCID"
+}

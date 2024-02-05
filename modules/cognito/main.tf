@@ -1,0 +1,125 @@
+module "aws_cognito_user_pool" {
+
+  source = "./source"
+
+  user_pool_name = "${var.account}-cognito-${var.env}-${var.system}-userpool"
+
+  username_configuration = {
+    case_sensitive = false
+  }
+
+  password_policy = {
+    minimum_length                   = 8
+    require_lowercase                = true
+    require_numbers                  = true
+    require_symbols                  = true
+    require_uppercase                = true
+    temporary_password_validity_days = 7
+
+  }
+  # resource servers
+
+  resource_servers = [
+    {
+      name       = "${var.account}-cognito-${var.env}-${var.system}-resource-server"
+      identifier = "${var.account}-cognito-${var.env}-${var.system}-resource-server"
+      scope = {
+        scope_name        = "todo.read"
+        scope_description = "Read todo list"
+      }
+    }
+  ]
+
+  # user_pool_domain
+  # domain = var.domain-name
+
+  # clients
+  clients = [
+    {
+      allowed_oauth_flows                  = ["implicit"]
+      allowed_oauth_flows_user_pool_client = true
+      prevent_user_existence_errors        = "ENABLED"
+      allowed_oauth_scopes = [
+        "email",
+        "openid"
+      ]
+      explicit_auth_flows = [
+        "ALLOW_REFRESH_TOKEN_AUTH", "ALLOW_USER_SRP_AUTH"
+      ]
+      name                         = "${var.account}-cognito-${var.env}-${var.system}-client"
+      supported_identity_providers = ["${var.provider-name}", "COGNITO"]
+      refresh_token_validity       = 30
+      access_token_validity        = 60
+      id_token_validity            = 60
+      token_validity_units = {
+        access_token  = "minutes"
+        id_token      = "minutes"
+        refresh_token = "days"
+      }
+      write_attributes = [
+        "address",
+        "birthdate",
+        "custom:role (mutable)",
+        "email",
+        "email_verfified",
+        "family_name",
+        "gender",
+        "given_name",
+        "locale",
+        "middle_name",
+        "name",
+        "nickname",
+        "phone_number",
+        "phone_number_verified",
+        "picture",
+        "preferred_username",
+        "profile",
+        "updated_at",
+        "website",
+        "zoneinfo"
+      ]
+      read_attributes = [
+        "address",
+        "birthdate",
+        "custom:role (mutable)",
+        "email",
+        "family_name",
+        "gender",
+        "given_name",
+        "locale",
+        "middle_name",
+        "name",
+        "nickname",
+        "phone_number",
+        "picture",
+        "preferred_username",
+        "profile",
+        "updated_at",
+        "website",
+        "zoneinfo"
+      ]
+    }
+  ]
+
+  # user_group
+
+  # identity_providers
+  identity_providers = [
+    {
+      provider_name = "${var.account}-cognito-${var.env}-${var.system}-userpool"
+      provider_type = "OIDC"
+
+      attribute_mapping = {
+        email    = "sub"
+        username = "sub"
+      }
+    }
+  ]
+
+  # tags
+  tags = {
+    Environment = var.env
+    Name        = "${var.account}-cognito-${var.env}-${var.system}-userpool"
+    System      = var.system
+  }
+}
