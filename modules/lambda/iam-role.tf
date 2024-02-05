@@ -85,6 +85,17 @@ data "aws_iam_policy_document" "lambda" {
   }
 
   statement {
+    sid    = "AllowCreateDeleteNetworkInterface"
+    effect = "Allow"
+    actions = [
+      "ec2:Describe*",
+      "ec2:CreateNetworkInterface",
+      "ec2:DeleteNetworkInterface",
+    ]
+    resources = ["*"]
+  }
+
+  statement {
     sid    = "RDS"
     effect = "Allow"
     actions = [
@@ -111,6 +122,26 @@ data "aws_iam_policy_document" "lambda" {
     ]
     resources = ["*"]
   }
+
+  # statement {
+  #   sid    = "Allowses"
+  #   effect = "Allow"
+  #   actions = [
+  #     "ses:SendEmail",
+  #     "ses:SendRawEmail",
+  #   ]
+  #   resources = ["*"]
+  # }
+
+  # statement {
+  #   sid    = "Allowssm"
+  #   effect = "Allow"
+  #   actions = [
+  #     "ssm:PutParameter",
+  #     "ssm:GetParametersByPath",
+  #   ]
+  #   resources = ["*"]
+  # }
 
   statement {
     sid    = "S3ListAllMyBuckets"
