@@ -105,17 +105,17 @@ module "aws_cognito_user_pool" {
   # user_group
 
   # identity_providers
-  identity_providers = [
-    {
-      provider_name = var.provider-name
-      provider_type = "OIDC"
+  # identity_providers = [
+  #   {
+  #     provider_name = var.provider-name
+  #     provider_type = "OIDC"
 
-      attribute_mapping = {
-        email    = "sub"
-        username = "sub"
-      }
-    }
-  ]
+  #     attribute_mapping = {
+  #       email    = "sub"
+  #       username = "sub"
+  #     }
+  #   }
+  # ]
 
   # tags
   tags = {

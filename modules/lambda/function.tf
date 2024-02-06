@@ -62,12 +62,12 @@ resource "aws_lambda_alias" "study_management" {
 }
 
 
-resource "aws_lambda_provisioned_concurrency_config" "study" {
-  count                             = var.enabled_provision_config ? 1 : 0
-  function_name                     = aws_lambda_function.study_management_lambda.function_name
-  provisioned_concurrent_executions = 2
-  qualifier                         = aws_lambda_alias.study_management.name
-}
+# resource "aws_lambda_provisioned_concurrency_config" "study" {
+#   count                             = var.enabled_provision_config ? 1 : 0
+#   function_name                     = aws_lambda_function.study_management_lambda.function_name
+#   provisioned_concurrent_executions = 2
+#   qualifier                         = aws_lambda_alias.study_management.name
+# }
 
 # lambda logging
 resource "aws_cloudwatch_log_group" "study_management_log_group" {
