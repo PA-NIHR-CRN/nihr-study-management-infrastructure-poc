@@ -34,3 +34,6 @@ variable "enabled_provision_config" {
 variable "vpc_id" {
 
 }
+variable "cognito_identifier" {
+
+}

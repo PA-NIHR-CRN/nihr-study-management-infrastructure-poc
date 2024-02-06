@@ -35,7 +35,9 @@ resource "aws_lambda_function" "study_management_lambda" {
 
   environment {
     variables = {
-      "StudyManagementApiConfiguration__JwtTokenValidationConfiguration__OverrideJwtTokenValidation" = "false"
+      "StudyManagementApiConfiguration__JwtTokenValidationConfiguration__OverrideJwtTokenValidation" = "false",
+      "StudyManagementApi__JwtBearer__Authority"                                                     = var.cognito_identifier
+
     }
   }
 
