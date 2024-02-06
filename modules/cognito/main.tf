@@ -41,9 +41,9 @@ module "aws_cognito_user_pool" {
       allowed_oauth_flows_user_pool_client = true
       prevent_user_existence_errors        = "ENABLED"
       generate_secret = true
-      allowed_oauth_scopes = [
-        "${var.account}-cognito-${var.env}-${var.system}-resource-server"
-      ]
+      # allowed_oauth_scopes = [
+      #   "${var.account}-cognito-${var.env}-${var.system}-resource-server"
+      # ]
       explicit_auth_flows = [
         "ALLOW_REFRESH_TOKEN_AUTH", "ALLOW_USER_SRP_AUTH"
       ]
