@@ -42,7 +42,7 @@ module "aws_cognito_user_pool" {
       prevent_user_existence_errors        = "ENABLED"
       generate_secret = true
       allowed_oauth_scopes = [
-        "${aws_cognito_resource_server.resource.*.scope_identifiers}"
+        "${aws_cognito_resource_server.resource[0].scope_identifiers}"
       ]
       explicit_auth_flows = [
         "ALLOW_REFRESH_TOKEN_AUTH", "ALLOW_USER_SRP_AUTH"
