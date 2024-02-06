@@ -84,7 +84,7 @@ module "aws_cognito_user_pool" {
         "custom:access_token",
         "custom:id_token",
         "email",
-        "email_verfified",
+        "email_verified",
         "family_name",
         "gender",
         "given_name",
