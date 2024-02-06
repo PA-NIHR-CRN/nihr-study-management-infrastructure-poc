@@ -48,7 +48,7 @@ module "aws_cognito_user_pool" {
         "ALLOW_REFRESH_TOKEN_AUTH", "ALLOW_USER_SRP_AUTH"
       ]
       name                         = "${var.account}-cognito-${var.env}-${var.system}-${var.client_name}-client"
-      supported_identity_providers = ["COGNITO"]
+      supported_identity_providers = ["${var.provider-name}", "COGNITO"]
       refresh_token_validity       = 30
       access_token_validity        = 60
       id_token_validity            = 60
@@ -60,7 +60,29 @@ module "aws_cognito_user_pool" {
       write_attributes = [
         "address",
         "birthdate",
-        # "custom:role",
+        "custom:access_token",
+        "custom:id_token",
+        "email",
+        "family_name",
+        "gender",
+        "given_name",
+        "locale",
+        "middle_name",
+        "name",
+        "nickname",
+        "phone_number",
+        "picture",
+        "preferred_username",
+        "profile",
+        "updated_at",
+        "website",
+        "zoneinfo"
+      ]
+      read_attributes = [
+        "address",
+        "birthdate",
+        "custom:access_token",
+        "custom:id_token",
         "email",
         "email_verfified",
         "family_name",
@@ -72,26 +94,6 @@ module "aws_cognito_user_pool" {
         "nickname",
         "phone_number",
         "phone_number_verified",
-        "picture",
-        "preferred_username",
-        "profile",
-        "updated_at",
-        "website",
-        "zoneinfo"
-      ]
-      read_attributes = [
-        "address",
-        "birthdate",
-        # "custom:role",
-        "email",
-        "family_name",
-        "gender",
-        "given_name",
-        "locale",
-        "middle_name",
-        "name",
-        "nickname",
-        "phone_number",
         "picture",
         "preferred_username",
         "profile",
