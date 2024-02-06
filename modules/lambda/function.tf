@@ -47,7 +47,7 @@ resource "aws_lambda_function" "study_management_lambda" {
       qualified_arn,
       memory_size,
       timeout,
-      environment
+      # environment
     ]
   }
   tags = {
