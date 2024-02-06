@@ -40,6 +40,7 @@ module "aws_cognito_user_pool" {
       allowed_oauth_flows                  = ["client_credentials"]
       allowed_oauth_flows_user_pool_client = true
       prevent_user_existence_errors        = "ENABLED"
+      generate_secret = true
       allowed_oauth_scopes = [
         "email",
         "openid"
