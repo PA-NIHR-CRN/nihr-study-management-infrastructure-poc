@@ -60,7 +60,7 @@ module "aws_cognito_user_pool" {
       write_attributes = [
         "address",
         "birthdate",
-        "custom:role",
+        # "custom:role",
         "email",
         "email_verfified",
         "family_name",
@@ -82,7 +82,7 @@ module "aws_cognito_user_pool" {
       read_attributes = [
         "address",
         "birthdate",
-        "custom:role",
+        # "custom:role",
         "email",
         "family_name",
         "gender",
