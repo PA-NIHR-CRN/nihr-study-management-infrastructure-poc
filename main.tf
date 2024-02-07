@@ -29,12 +29,14 @@ data "aws_sns_topic" "system_alerts_service_desk" {
 }
 
 module "api_gateway" {
-  source            = "./modules/api-gateway"
-  account           = var.names["${var.env}"]["accountidentifiers"]
-  env               = var.env
-  system            = var.names["system"]
-  invoke_lambda_arn = module.lambda.study_management_invoke_alias_arn
-  stage_name        = "v1"
+  source              = "./modules/api-gateway"
+  account             = var.names["${var.env}"]["accountidentifiers"]
+  env                 = var.env
+  system              = var.names["system"]
+  invoke_lambda_arn   = module.lambda.study_management_invoke_alias_arn
+  stage_name          = "v1"
+  function_name       = module.lambda.function_name
+  function_alias_name = module.lambda.alias_name
 
 }
 

@@ -78,6 +78,51 @@ resource "aws_api_gateway_resource" "main" {
   path_part   = "{proxy+}"
 }
 
+//resource path
+
+# # Define the API Gateway resource for /api/v1/home
+# resource "aws_api_gateway_resource" "home_resource" {
+#   rest_api_id = aws_api_gateway_rest_api.main.id
+#   parent_id   = aws_api_gateway_rest_api.main.root_resource_id
+#   path_part   = "api"
+# }
+
+# resource "aws_api_gateway_resource" "v1_resource" {
+#   rest_api_id = aws_api_gateway_rest_api.main.id
+#   parent_id   = aws_api_gateway_resource.home_resource.id
+#   path_part   = "v1"
+# }
+
+# resource "aws_api_gateway_resource" "home_path_resource" {
+#   rest_api_id = aws_api_gateway_rest_api.main.id
+#   parent_id   = aws_api_gateway_resource.v1_resource.id
+#   path_part   = "home"
+# }
+
+# # Define the API Gateway resource for /api/v1/home/authenticated
+# resource "aws_api_gateway_resource" "authenticated_resource" {
+#   rest_api_id = aws_api_gateway_rest_api.main.id
+#   parent_id   = aws_api_gateway_resource.home_path_resource.id
+#   path_part   = "authenticated"
+# }
+
+# // method
+
+# resource "aws_api_gateway_method" "home_method" {
+#   rest_api_id   = aws_api_gateway_rest_api.main.id
+#   resource_id   = aws_api_gateway_resource.home_path_resource.id
+#   http_method   = "GET"
+#   authorization = "NONE"
+# }
+
+
+# resource "aws_api_gateway_method" "authenticated_method" {
+#   rest_api_id   = aws_api_gateway_rest_api.main.id
+#   resource_id   = aws_api_gateway_resource.authenticated_resource.id
+#   http_method   = "GET"
+#   authorization = "NONE"
+# }
+
 resource "aws_api_gateway_method" "main" {
   rest_api_id   = aws_api_gateway_rest_api.main.id
   resource_id   = aws_api_gateway_resource.main.id
@@ -125,4 +170,15 @@ resource "aws_api_gateway_deployment" "main" {
   depends_on  = [aws_api_gateway_integration.main]
   rest_api_id = aws_api_gateway_rest_api.main.id
   stage_name  = var.stage_name
+}
+
+//lambda invoker
+
+resource "aws_lambda_permission" "main" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = var.function_name
+  qualifier     = var.function_alias_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.dte_location.id}/*"
 }

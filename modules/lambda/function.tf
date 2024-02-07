@@ -89,3 +89,11 @@ output "lambda_sg" {
 output "study_management_invoke_alias_arn" {
   value = aws_lambda_alias.study_management.invoke_arn
 }
+
+output "function_name" {
+  value = aws_lambda_function.study_management_lambda.function_name
+}
+
+output "alias_name" {
+  value = aws_lambda_alias.study_management.name
+}
