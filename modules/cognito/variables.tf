@@ -8,7 +8,7 @@ variable "userpool" {
 variable "client_name" {
 
 }
-variable "domain-name" {}
+# variable "domain-name" {}
 # variable "cognito_func_arn" {}
 # variable "metadata" {}
 # variable "email" {}
