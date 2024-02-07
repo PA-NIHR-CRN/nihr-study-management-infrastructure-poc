@@ -32,7 +32,7 @@ module "aws_cognito_user_pool" {
   ]
 
   # user_pool_domain
-  domain = "${var.account}-cognito-${var.env}-${var.userpool}-userpool"
+  domain = "${var.account}-${var.env}-${var.userpool}"
 
   # clients
   clients = [
