@@ -173,6 +173,9 @@ resource "aws_api_gateway_deployment" "main" {
 }
 
 //lambda invoker
+data "aws_caller_identity" "current" {}
+
+data "aws_region" "current" {}
 
 resource "aws_lambda_permission" "main" {
   statement_id  = "AllowExecutionFromAPIGateway"
@@ -180,5 +183,5 @@ resource "aws_lambda_permission" "main" {
   function_name = var.function_name
   qualifier     = var.function_alias_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.dte_location.id}/*"
+  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.main.id}/*"
 }
