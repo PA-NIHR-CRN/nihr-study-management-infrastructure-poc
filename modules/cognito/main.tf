@@ -22,17 +22,17 @@ module "aws_cognito_user_pool" {
   resource_servers = [
     {
       name       = "${var.account}-cognito-${var.env}-${var.system}-resource-server"
-      identifier = "${var.account}-cognito-${var.env}-${var.system}-resource-server"
+      identifier = "StudyManagementApi"
       scope = [{
-        scope_name        = "todo.read"
-        scope_description = "Read todo list"
+        scope_name        = "study.create"
+        scope_description = "Create a study via Study Management API"
         }
       ]
     }
   ]
 
   # user_pool_domain
-  # domain = var.domain-name
+  domain = "${var.account}-cognito-${var.env}-${var.userpool}-userpool"
 
   # clients
   clients = [
