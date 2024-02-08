@@ -60,8 +60,8 @@ module "aws_cognito_user_pool" {
       write_attributes = [
         "address",
         "birthdate",
-        # "custom:access_token",
-        # "custom:id_token",
+        "custom:access_token",
+        "custom:id_token",
         "email",
         "family_name",
         "gender",
@@ -81,8 +81,8 @@ module "aws_cognito_user_pool" {
       read_attributes = [
         "address",
         "birthdate",
-        # "custom:access_token",
-        # "custom:id_token",
+        "custom:access_token",
+        "custom:id_token",
         "email",
         "email_verified",
         "family_name",
