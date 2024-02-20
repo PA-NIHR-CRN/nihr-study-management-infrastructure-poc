@@ -21,7 +21,7 @@ resource "aws_security_group" "sg_lambda" {
 resource "aws_lambda_function" "study_management_lambda" {
   function_name = "${var.account}-lambda-${var.env}-${var.system}"
   memory_size   = var.memory_size
-  timeout       = 30
+  timeout       = 120
   handler       = "NIHR.StudyManagement.Api::NIHR.StudyManagement.Api.LambdaEntryPoint::FunctionHandlerAsync"
   publish       = true # don't need this if updating code outside of terrafrom
   filename      = "./modules/.build/lambda_dummy/lambda_dummy.zip"
