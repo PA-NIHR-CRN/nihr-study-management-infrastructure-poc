@@ -46,7 +46,6 @@ resource "aws_lambda_function" "study_management_lambda" {
       version,
       qualified_arn,
       memory_size,
-      timeout,
       # environment
     ]
   }
