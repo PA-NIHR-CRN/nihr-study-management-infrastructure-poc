@@ -14,7 +14,7 @@ variable "names" {
       "engine_version"        = "8.0.mysql_aurora.3.02.2"
       "instanceclass"         = "db.serverless"
       "skip_final_snapshot"   = true
-      "private_subnet_ids"    = ["subnet-01e81b505937e0b1c", "subnet-03bfe73d7689edc15", "subnet-07f2fcf41c2929c30"]
+      "private_subnet_ids"    = ["subnet-036934130e6e171db", "subnet-08301b8a8d127a1e5", "subnet-04c549421f430d61f"] #private subnets
       "vpcid"                 = "vpc-05a9b4ad1477b9b86"
       "maintenancewindow"     = "Sat:04:00-Sat:05:00"
       "storageencrypted"      = true
