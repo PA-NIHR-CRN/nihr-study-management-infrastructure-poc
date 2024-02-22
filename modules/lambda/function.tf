@@ -43,7 +43,7 @@ resource "aws_lambda_function" "study_management_lambda" {
 
   lifecycle {
     ignore_changes = [
-      version,
+      # version,
       qualified_arn,
       memory_size,
       # environment
