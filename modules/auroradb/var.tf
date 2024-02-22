@@ -115,3 +115,15 @@ variable "ingress_rules" {
     description = string
   }))
 }
+
+variable "iam_database_authentication_enabled" {
+  type        = bool
+  default     = true
+  description = "Specify if mapping AWS IAM accounts to database accounts is enabled."
+}
+
+variable "iam_roles" {
+  type        = list(string)
+  default     = null
+  description = "A list of IAM Role ARNs to associate with the cluster"
+}
