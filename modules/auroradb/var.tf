@@ -130,6 +130,6 @@ variable "iam_roles" {
 
 variable "delete_automated_backups" {
   type        = bool
-  default     = true
+  default     = false
   description = "Specifies whether to remove automated backups immediately after the DB cluster is deleted."
 }
