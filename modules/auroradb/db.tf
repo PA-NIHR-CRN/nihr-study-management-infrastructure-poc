@@ -114,23 +114,25 @@ resource "aws_rds_cluster_parameter_group" "default" {
 }
 
 resource "aws_rds_cluster" "rds_cluster" {
-  cluster_identifier              = "${var.account}-rds-aurora-${var.env}-${var.app}-cluster"
-  engine                          = "aurora-mysql"
-  engine_version                  = var.engine_version
-  engine_mode                     = "provisioned"
-  availability_zones              = var.az_zones
-  database_name                   = var.db_name
-  master_username                 = var.username
-  master_password                 = random_password.password.result
-  backup_retention_period         = var.backup_retention_period
-  preferred_maintenance_window    = var.maintenance_window
-  preferred_backup_window         = "02:00-04:00"
-  storage_encrypted               = true
-  skip_final_snapshot             = var.skip_final_snapshot
-  db_subnet_group_name            = var.subnet_group
-  db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.default.name
-  enabled_cloudwatch_logs_exports = var.log_types
-  vpc_security_group_ids          = [aws_security_group.sg-rds.id]
+  cluster_identifier                  = "${var.account}-rds-aurora-${var.env}-${var.app}-cluster"
+  engine                              = "aurora-mysql"
+  engine_version                      = var.engine_version
+  engine_mode                         = "provisioned"
+  availability_zones                  = var.az_zones
+  database_name                       = var.db_name
+  master_username                     = var.username
+  master_password                     = random_password.password.result
+  backup_retention_period             = var.backup_retention_period
+  preferred_maintenance_window        = var.maintenance_window
+  preferred_backup_window             = "02:00-04:00"
+  storage_encrypted                   = true
+  skip_final_snapshot                 = var.skip_final_snapshot
+  db_subnet_group_name                = var.subnet_group
+  db_cluster_parameter_group_name     = aws_rds_cluster_parameter_group.default.name
+  enabled_cloudwatch_logs_exports     = var.log_types
+  vpc_security_group_ids              = [aws_security_group.sg-rds.id]
+  iam_database_authentication_enabled = var.iam_database_authentication_enabled
+  iam_roles                           = var.iam_roles
 
   serverlessv2_scaling_configuration {
     max_capacity = var.max_capacity
