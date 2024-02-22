@@ -127,3 +127,9 @@ variable "iam_roles" {
   default     = null
   description = "A list of IAM Role ARNs to associate with the cluster"
 }
+
+variable "delete_automated_backups" {
+  type        = bool
+  default     = true
+  description = "Specifies whether to remove automated backups immediately after the DB cluster is deleted."
+}
