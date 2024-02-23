@@ -76,33 +76,33 @@ data "aws_secretsmanager_secret_version" "terraform_secret_version" {
 
 ## RDS DB
 module "rds_aurora" {
-  source                  = "./modules/auroradb"
-  account                 = var.names["${var.env}"]["accountidentifiers"]
-  env                     = var.env
-  system                  = var.names["system"]
-  app                     = var.names["${var.env}"]["app"]
-  vpc_id                  = var.names["${var.env}"]["vpcid"]
-  engine                  = var.names["${var.env}"]["engine"]
-  engine_version          = var.names["${var.env}"]["engine_version"]
-  instance_class          = var.names["${var.env}"]["instanceclass"]
-  backup_retention_period = var.names["${var.env}"]["backupretentionperiod"]
-  maintenance_window      = var.names["${var.env}"]["maintenancewindow"]
-  grant_odp_db_access     = var.names["${var.env}"]["grant_odp_db_access"]
-  subnet_group            = "${var.names["${var.env}"]["accountidentifiers"]}-rds-sng-${var.env}-public"
-  db_name                 = "study-registry"
-  username                = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["db-username"]
-  instance_count          = var.names["${var.env}"]["rds_instance_count"]
-  az_zones                = var.names["${var.env}"]["az_zones"]
-  min_capacity            = var.names["${var.env}"]["min_capacity"]
-  max_capacity            = var.names["${var.env}"]["max_capacity"]
-  skip_final_snapshot     = var.names["${var.env}"]["skip_final_snapshot"]
-  log_types               = var.names["${var.env}"]["log_types"]
-  publicly_accessible     = var.names["${var.env}"]["publicly_accessible"]
-  add_scheduler_tag       = var.names["${var.env}"]["add_scheduler_tag"]
-  lambda_sg               = module.lambda.lambda_sg
-  odp_db_server_ip        = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["odp-db-server-ip"]
-  ingress_rules           = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["ingress_rules"]
-  delete_automated_backups= var.names["${var.env}"]["delete_automated_backups"]
+  source                    = "./modules/auroradb"
+  account                   = var.names["${var.env}"]["accountidentifiers"]
+  env                       = var.env
+  system                    = var.names["system"]
+  app                       = var.names["${var.env}"]["app"]
+  vpc_id                    = var.names["${var.env}"]["vpcid"]
+  engine                    = var.names["${var.env}"]["engine"]
+  engine_version            = var.names["${var.env}"]["engine_version"]
+  instance_class            = var.names["${var.env}"]["instanceclass"]
+  backup_retention_period   = var.names["${var.env}"]["backupretentionperiod"]
+  maintenance_window        = var.names["${var.env}"]["maintenancewindow"]
+  grant_odp_db_access       = var.names["${var.env}"]["grant_odp_db_access"]
+  subnet_group              = "${var.names["${var.env}"]["accountidentifiers"]}-rds-sng-${var.env}-public"
+  db_name                   = "study-registry"
+  username                  = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["db-username"]
+  instance_count            = var.names["${var.env}"]["rds_instance_count"]
+  az_zones                  = var.names["${var.env}"]["az_zones"]
+  min_capacity              = var.names["${var.env}"]["min_capacity"]
+  max_capacity              = var.names["${var.env}"]["max_capacity"]
+  skip_final_snapshot       = var.names["${var.env}"]["skip_final_snapshot"]
+  log_types                 = var.names["${var.env}"]["log_types"]
+  publicly_accessible       = var.names["${var.env}"]["publicly_accessible"]
+  add_scheduler_tag         = var.names["${var.env}"]["add_scheduler_tag"]
+  lambda_sg                 = module.lambda.lambda_sg
+  odp_db_server_ip          = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["odp-db-server-ip"]
+  ingress_rules             = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["ingress_rules"]
+  delete_automated_backups  = var.names["${var.env}"]["delete_automated_backups"]
 }
 
 module "cognito" {
