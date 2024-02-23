@@ -134,6 +134,7 @@ resource "aws_rds_cluster" "rds_cluster" {
   iam_database_authentication_enabled = var.iam_database_authentication_enabled
   iam_roles                           = var.iam_roles
   delete_automated_backups            = var.delete_automated_backups
+  apply_immediately                   = var.apply_immediately
 
   serverlessv2_scaling_configuration {
     max_capacity = var.max_capacity

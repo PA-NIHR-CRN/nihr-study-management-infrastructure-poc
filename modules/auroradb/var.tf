@@ -133,3 +133,9 @@ variable "delete_automated_backups" {
   default     = true
   description = "Specifies whether to remove automated backups immediately after the DB cluster is deleted."
 }
+
+variable "apply_immediately" {
+  type        = bool
+  default     = false
+  description = "Specifies whether any cluster modifications are applied immediately, or during the next maintenance window."
+}

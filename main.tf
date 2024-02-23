@@ -104,6 +104,7 @@ module "rds_aurora" {
   ingress_rules                         = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["ingress_rules"]
   delete_automated_backups              = var.names["${var.env}"]["delete_automated_backups"]
   iam_database_authentication_enabled   = var.names["${var.env}"]["iam_database_authentication_enabled"]
+  apply_immediately                     = var.names["${var.env}"]["apply_immediately"]
 }
 
 module "cognito" {

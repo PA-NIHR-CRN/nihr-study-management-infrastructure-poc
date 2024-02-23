@@ -33,6 +33,7 @@ variable "names" {
       "provider-name"                         = "ORCID"
       "delete_automated_backups"              = true
       "iam_database_authentication_enabled"   = true
+      "apply_immediately"                     = true
     }
   }
 }
