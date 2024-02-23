@@ -152,4 +152,15 @@ data "aws_iam_policy_document" "lambda" {
     resources = ["*"]
   }
 
+  statement {
+    sid    = "AllowRDSDBConnect"
+    effect = "Allow"
+    actions = [
+      "rds-db:connect"
+    ]
+    resources = [
+      "arn:aws:rds-db:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:dbuser:cluster-WQKDMOULMU25UHTZNVVSW4MPPA/aurorauser"
+    ]
+  }
+
 }
