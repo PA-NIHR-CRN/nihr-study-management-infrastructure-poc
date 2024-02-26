@@ -21,7 +21,7 @@ resource "aws_security_group" "sg_lambda" {
 resource "aws_lambda_function" "study_management_lambda" {
   function_name = "${var.account}-lambda-${var.env}-${var.system}"
   memory_size   = var.memory_size
-  timeout       = 120
+  timeout       = 60
   handler       = "NIHR.StudyManagement.Api::NIHR.StudyManagement.Api.LambdaEntryPoint::FunctionHandlerAsync"
   publish       = true # don't need this if updating code outside of terrafrom
   filename      = "./modules/.build/lambda_dummy/lambda_dummy.zip"
@@ -35,9 +35,15 @@ resource "aws_lambda_function" "study_management_lambda" {
 
   environment {
     variables = {
-      "StudyManagementApiConfiguration__JwtTokenValidationConfiguration__OverrideJwtTokenValidation" = "false",
-      "StudyManagementApi__JwtBearer__Authority"                                                     = "https://${var.cognito_identifier}"
-
+      "StudyManagementApi__JwtBearer__Authority"                                                     = "https://${var.cognito_identifier}",
+      "StudyManagement__DefaultRoleName"                                                             = "CHIEF_INVESTIGATOR",
+      "StudyManagement__DefaultLocalSystemName"                                                      = "EDGE",
+      "Database_Endpoint"                                                                            = "nihrd-rds-aurora-dev-study-management-cluster.cluster-cyufumnedrbx.eu-west-2.rds.amazonaws.com",
+      "User"                                                                                         = "aurorauser",
+      "DatabaseName"                                                                                 = "study_management",
+      "Port"                                                                                         = 3306,
+      "SslMode"                                                                                      = "Required", 
+      "SslCA"                                                                                        = "eu-west-2-bundle.pem"
     }
   }
 
