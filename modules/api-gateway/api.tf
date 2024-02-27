@@ -73,10 +73,16 @@ resource "aws_api_gateway_rest_api" "main" {
 }
 
 # Define the resources
-resource "aws_api_gateway_resource" "identifier" {
+resource "aws_api_gateway_resource" "api" {
   rest_api_id = aws_api_gateway_rest_api.main.id
   parent_id   = aws_api_gateway_rest_api.main.root_resource_id
-  path_part   = "api/identifier"
+  path_part   = "identifier"
+}
+
+resource "aws_api_gateway_resource" "identifier" {
+  rest_api_id = aws_api_gateway_rest_api.main.id
+  parent_id   = aws_api_gateway_resource.api.id
+  path_part   = "identifier"
 }
 
 resource "aws_api_gateway_resource" "identifier_id" {
@@ -87,8 +93,8 @@ resource "aws_api_gateway_resource" "identifier_id" {
 
 resource "aws_api_gateway_resource" "home" {
   rest_api_id = aws_api_gateway_rest_api.main.id
-  parent_id   = aws_api_gateway_rest_api.main.root_resource_id
-  path_part   = "api/home"
+  parent_id   = aws_api_gateway_resource.api.id
+  path_part   = "home"
 }
 
 resource "aws_api_gateway_resource" "home_authenticated" {
