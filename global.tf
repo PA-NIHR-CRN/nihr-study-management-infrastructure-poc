@@ -31,6 +31,7 @@ variable "names" {
       "lambda_memory"         = 256
       "retention_period"      = 30
       "provider-name"         = "ORCID"
+      "stage_name"            = "dev"
     }
   }
 }

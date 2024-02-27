@@ -34,7 +34,7 @@ module "api_gateway" {
   env                 = var.env
   system              = var.names["system"]
   invoke_lambda_arn   = module.lambda.study_management_invoke_alias_arn
-  stage_name          = "v1"
+  stage_name          = var.names["${var.env}"]["stage_name"]
   function_name       = module.lambda.function_name
   function_alias_name = module.lambda.alias_name
 
