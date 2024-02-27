@@ -182,53 +182,43 @@ resource "aws_api_gateway_integration" "home_authenticated_get" {
 
 # Link the methods and integrations
 resource "aws_api_gateway_integration_response" "identifier_post_response" {
-  rest_api_id       = aws_api_gateway_rest_api.main.id
-  resource_id       = aws_api_gateway_resource.identifier.id
-  http_method       = aws_api_gateway_method.identifier_post.http_method
-  status_code       = "200"
-  depends_on        = [
-    aws_api_gateway_method.identifier_post,
-  ]
+  rest_api_id = aws_api_gateway_rest_api.main.id
+  resource_id = aws_api_gateway_resource.identifier.id
+  http_method = aws_api_gateway_method.identifier_post.http_method
+  status_code = "200"
+  depends_on  = [aws_api_gateway_resource.identifier, aws_api_gateway_method.identifier_post]
 }
 
 resource "aws_api_gateway_integration_response" "identifier_id_get_response" {
-  rest_api_id       = aws_api_gateway_rest_api.main.id
-  resource_id       = aws_api_gateway_resource.identifier_id.id
-  http_method       = aws_api_gateway_method.identifier_id_get.http_method
-  status_code       = "200"
-  depends_on        = [
-    aws_api_gateway_method.identifier_id_get,
-  ]
+  rest_api_id = aws_api_gateway_rest_api.main.id
+  resource_id = aws_api_gateway_resource.identifier_id.id
+  http_method = aws_api_gateway_method.identifier_id_get.http_method
+  status_code = "200"
+  depends_on  = [aws_api_gateway_resource.identifier_id, aws_api_gateway_method.identifier_id_get]
 }
 
 resource "aws_api_gateway_integration_response" "identifier_id_patch_response" {
-  rest_api_id       = aws_api_gateway_rest_api.main.id
-  resource_id       = aws_api_gateway_resource.identifier_id.id
-  http_method       = aws_api_gateway_method.identifier_id_patch.http_method
-  status_code       = "200"
-  depends_on        = [
-    aws_api_gateway_method.identifier_id_patch,
-  ]
+  rest_api_id = aws_api_gateway_rest_api.main.id
+  resource_id = aws_api_gateway_resource.identifier_id.id
+  http_method = aws_api_gateway_method.identifier_id_patch.http_method
+  status_code = "200"
+  depends_on  = [aws_api_gateway_resource.identifier_id, aws_api_gateway_method.identifier_id_patch]
 }
 
 resource "aws_api_gateway_integration_response" "home_get_response" {
-  rest_api_id       = aws_api_gateway_rest_api.main.id
-  resource_id       = aws_api_gateway_resource.home.id
-  http_method       = aws_api_gateway_method.home_get.http_method
-  status_code       = "200"
-  depends_on        = [
-    aws_api_gateway_method.home_get,
-  ]
+  rest_api_id = aws_api_gateway_rest_api.main.id
+  resource_id = aws_api_gateway_resource.home.id
+  http_method = aws_api_gateway_method.home_get.http_method
+  status_code = "200"
+  depends_on  = [aws_api_gateway_resource.home, aws_api_gateway_method.home_get]
 }
 
 resource "aws_api_gateway_integration_response" "home_authenticated_get_response" {
-  rest_api_id       = aws_api_gateway_rest_api.main.id
-  resource_id       = aws_api_gateway_resource.home_authenticated.id
-  http_method       = aws_api_gateway_method.home_authenticated_get.http_method
-  status_code       = "200"
-  depends_on        = [
-    aws_api_gateway_method.home_authenticated_get,
-  ]
+  rest_api_id = aws_api_gateway_rest_api.main.id
+  resource_id = aws_api_gateway_resource.home_authenticated.id
+  http_method = aws_api_gateway_method.home_authenticated_get.http_method
+  status_code = "200"
+  depends_on  = [aws_api_gateway_resource.home_authenticated, aws_api_gateway_method.home_authenticated_get]
 }
 
 
