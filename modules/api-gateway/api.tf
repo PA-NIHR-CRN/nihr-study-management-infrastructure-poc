@@ -225,7 +225,7 @@ resource "aws_api_gateway_integration_response" "home_authenticated_get_response
   rest_api_id       = aws_api_gateway_rest_api.main.id
   resource_id       = aws_api_gateway_method.home_authenticated_get.id
   http_method       = aws_api_gateway_method.home_authenticated_get.http_method
-  status_code       = "200"ßß
+  status_code       = "200"
   depends_on        = [
     aws_api_gateway_method.home_authenticated_get,
   ]
