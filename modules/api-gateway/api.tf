@@ -72,88 +72,164 @@ resource "aws_api_gateway_rest_api" "main" {
   }
 }
 
-resource "aws_api_gateway_resource" "main" {
+# Define the resources
+resource "aws_api_gateway_resource" "api" {
   rest_api_id = aws_api_gateway_rest_api.main.id
   parent_id   = aws_api_gateway_rest_api.main.root_resource_id
-  path_part   = "{proxy+}"
+  path_part   = "api"
 }
 
-//resource path
+resource "aws_api_gateway_resource" "identifier" {
+  rest_api_id = aws_api_gateway_rest_api.main.id
+  parent_id   = aws_api_gateway_resource.api.id
+  path_part   = "identifier"
+}
 
-# # Define the API Gateway resource for /api/v1/home
-# resource "aws_api_gateway_resource" "home_resource" {
-#   rest_api_id = aws_api_gateway_rest_api.main.id
-#   parent_id   = aws_api_gateway_rest_api.main.root_resource_id
-#   path_part   = "api"
-# }
+resource "aws_api_gateway_resource" "identifier_id" {
+  rest_api_id = aws_api_gateway_rest_api.main.id
+  parent_id   = aws_api_gateway_resource.identifier.id
+  path_part   = "{identifier}"
+}
 
-# resource "aws_api_gateway_resource" "v1_resource" {
-#   rest_api_id = aws_api_gateway_rest_api.main.id
-#   parent_id   = aws_api_gateway_resource.home_resource.id
-#   path_part   = "v1"
-# }
+resource "aws_api_gateway_resource" "home" {
+  rest_api_id = aws_api_gateway_rest_api.main.id
+  parent_id   = aws_api_gateway_resource.api.id
+  path_part   = "home"
+}
 
-# resource "aws_api_gateway_resource" "home_path_resource" {
-#   rest_api_id = aws_api_gateway_rest_api.main.id
-#   parent_id   = aws_api_gateway_resource.v1_resource.id
-#   path_part   = "home"
-# }
+resource "aws_api_gateway_resource" "home_authenticated" {
+  rest_api_id = aws_api_gateway_rest_api.main.id
+  parent_id   = aws_api_gateway_resource.home.id
+  path_part   = "authenticated"
+}
 
-# # Define the API Gateway resource for /api/v1/home/authenticated
-# resource "aws_api_gateway_resource" "authenticated_resource" {
-#   rest_api_id = aws_api_gateway_rest_api.main.id
-#   parent_id   = aws_api_gateway_resource.home_path_resource.id
-#   path_part   = "authenticated"
-# }
-
-# // method
-
-# resource "aws_api_gateway_method" "home_method" {
-#   rest_api_id   = aws_api_gateway_rest_api.main.id
-#   resource_id   = aws_api_gateway_resource.home_path_resource.id
-#   http_method   = "GET"
-#   authorization = "NONE"
-# }
-
-
-# resource "aws_api_gateway_method" "authenticated_method" {
-#   rest_api_id   = aws_api_gateway_rest_api.main.id
-#   resource_id   = aws_api_gateway_resource.authenticated_resource.id
-#   http_method   = "GET"
-#   authorization = "NONE"
-# }
-
-resource "aws_api_gateway_method" "main" {
+# Define the methods
+resource "aws_api_gateway_method" "identifier_post" {
   rest_api_id   = aws_api_gateway_rest_api.main.id
-  resource_id   = aws_api_gateway_resource.main.id
-  http_method   = "ANY"
+  resource_id   = aws_api_gateway_resource.identifier.id
+  http_method   = "POST"
   authorization = "NONE"
 }
 
-resource "aws_api_gateway_integration" "main" {
-  rest_api_id = aws_api_gateway_rest_api.main.id
-  resource_id = aws_api_gateway_resource.main.id
-  http_method = aws_api_gateway_method.main.http_method
-  # method that the api gateway will use to call the lambda - lambdas can only be invoked by POST, even though the gateway method may be a GET
-  type                    = "AWS_PROXY"
-  uri                     = var.invoke_lambda_arn
-  integration_http_method = "POST"
+resource "aws_api_gateway_method" "identifier_id_get" {
+  rest_api_id   = aws_api_gateway_rest_api.main.id
+  resource_id   = aws_api_gateway_resource.identifier_id.id
+  http_method   = "GET"
+  authorization = "NONE"
 }
 
+resource "aws_api_gateway_method" "identifier_id_patch" {
+  rest_api_id   = aws_api_gateway_rest_api.main.id
+  resource_id   = aws_api_gateway_resource.identifier_id.id
+  http_method   = "PATCH"
+  authorization = "NONE"
+}
 
-resource "aws_api_gateway_method_response" "main" {
+resource "aws_api_gateway_method" "home_get" {
+  rest_api_id   = aws_api_gateway_rest_api.main.id
+  resource_id   = aws_api_gateway_resource.home.id
+  http_method   = "GET"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_method" "home_authenticated_get" {
+  rest_api_id   = aws_api_gateway_rest_api.main.id
+  resource_id   = aws_api_gateway_resource.home_authenticated.id
+  http_method   = "GET"
+  authorization = "NONE"
+}
+
+# Define integrations
+
+resource "aws_api_gateway_integration" "identifier_post" {
+  rest_api_id             = aws_api_gateway_rest_api.main.id
+  resource_id             = aws_api_gateway_resource.identifier.id
+  http_method             = aws_api_gateway_method.identifier_post.http_method
+  type                    = "AWS_PROXY"
+  integration_http_method = "POST"
+  uri                     = var.invoke_lambda_arn
+}
+
+resource "aws_api_gateway_integration" "identifier_id_get" {
+  rest_api_id             = aws_api_gateway_rest_api.main.id
+  resource_id             = aws_api_gateway_resource.identifier_id.id
+  http_method             = aws_api_gateway_method.identifier_id_get.http_method
+  type                    = "AWS_PROXY"
+  integration_http_method = "POST"
+  uri                     = var.invoke_lambda_arn
+}
+
+resource "aws_api_gateway_integration" "identifier_id_patch" {
+  rest_api_id             = aws_api_gateway_rest_api.main.id
+  resource_id             = aws_api_gateway_resource.identifier_id.id
+  http_method             = aws_api_gateway_method.identifier_id_patch.http_method
+  type                    = "AWS_PROXY"
+  integration_http_method = "POST"
+  uri                     = var.invoke_lambda_arn
+}
+
+resource "aws_api_gateway_integration" "home_get" {
+  rest_api_id             = aws_api_gateway_rest_api.main.id
+  resource_id             = aws_api_gateway_resource.home.id
+  http_method             = aws_api_gateway_method.home_get.http_method
+  type                    = "AWS_PROXY"
+  integration_http_method = "POST"
+  uri                     = var.invoke_lambda_arn
+}
+
+resource "aws_api_gateway_integration" "home_authenticated_get" {
+  rest_api_id             = aws_api_gateway_rest_api.main.id
+  resource_id             = aws_api_gateway_resource.home_authenticated.id
+  http_method             = aws_api_gateway_method.home_authenticated_get.http_method
+  type                    = "AWS_PROXY"
+  integration_http_method = "POST"
+  uri                     = var.invoke_lambda_arn
+}
+
+# Link the methods and integrations
+resource "aws_api_gateway_integration_response" "identifier_post_response" {
   rest_api_id = aws_api_gateway_rest_api.main.id
-  resource_id = aws_api_gateway_resource.main.id
-  http_method = aws_api_gateway_method.main.http_method
+  resource_id = aws_api_gateway_resource.identifier.id
+  http_method = aws_api_gateway_method.identifier_post.http_method
   status_code = "200"
-  depends_on = [
-    aws_api_gateway_method.main,
-  ]
+  depends_on  = [aws_api_gateway_resource.identifier, aws_api_gateway_method.identifier_post]
+}
+
+resource "aws_api_gateway_integration_response" "identifier_id_get_response" {
+  rest_api_id = aws_api_gateway_rest_api.main.id
+  resource_id = aws_api_gateway_resource.identifier_id.id
+  http_method = aws_api_gateway_method.identifier_id_get.http_method
+  status_code = "200"
+  depends_on  = [aws_api_gateway_resource.identifier_id, aws_api_gateway_method.identifier_id_get]
+}
+
+resource "aws_api_gateway_integration_response" "identifier_id_patch_response" {
+  rest_api_id = aws_api_gateway_rest_api.main.id
+  resource_id = aws_api_gateway_resource.identifier_id.id
+  http_method = aws_api_gateway_method.identifier_id_patch.http_method
+  status_code = "200"
+  depends_on  = [aws_api_gateway_resource.identifier_id, aws_api_gateway_method.identifier_id_patch]
+}
+
+resource "aws_api_gateway_integration_response" "home_get_response" {
+  rest_api_id = aws_api_gateway_rest_api.main.id
+  resource_id = aws_api_gateway_resource.home.id
+  http_method = aws_api_gateway_method.home_get.http_method
+  status_code = "200"
+  depends_on  = [aws_api_gateway_resource.home, aws_api_gateway_method.home_get]
+}
+
+resource "aws_api_gateway_integration_response" "home_authenticated_get_response" {
+  rest_api_id = aws_api_gateway_rest_api.main.id
+  resource_id = aws_api_gateway_resource.home_authenticated.id
+  http_method = aws_api_gateway_method.home_authenticated_get.http_method
+  status_code = "200"
+  depends_on  = [aws_api_gateway_resource.home_authenticated, aws_api_gateway_method.home_authenticated_get]
 }
 
 resource "aws_api_gateway_method_settings" "main" {
   rest_api_id = aws_api_gateway_rest_api.main.id
-  stage_name  = "v1"
+  stage_name  = var.stage_name
   method_path = "*/*"
 
   settings {
@@ -168,24 +244,8 @@ resource "aws_api_gateway_method_settings" "main" {
   }
 }
 
-
-resource "aws_api_gateway_integration_response" "main" {
-  rest_api_id = aws_api_gateway_rest_api.main.id
-  resource_id = aws_api_gateway_resource.main.id
-  http_method = aws_api_gateway_method.main.http_method
-  status_code = aws_api_gateway_method_response.main.status_code
-
-  response_templates = {
-    "application/json" = ""
-  }
-  depends_on = [
-    aws_api_gateway_integration.main,
-    aws_api_gateway_method_response.main,
-  ]
-}
-
 resource "aws_api_gateway_deployment" "main" {
-  depends_on  = [aws_api_gateway_integration.main]
+  depends_on  = [aws_api_gateway_integration.identifier_post, aws_api_gateway_integration.identifier_id_get, aws_api_gateway_integration.identifier_id_patch, aws_api_gateway_integration.home_get, aws_api_gateway_integration.home_authenticated_get]
   rest_api_id = aws_api_gateway_rest_api.main.id
   stage_name  = var.stage_name
 }

@@ -33,6 +33,7 @@ variable "names" {
       "provider-name"               = "ORCID"
       "db_name"                     = "study_management"
       "rds_password_secret_name"    = "nihrd-secret-dev-rds-aurora-mysql-study-management-admin-password"
+      "stage_name"                  = "dev"
     }
   }
 }
