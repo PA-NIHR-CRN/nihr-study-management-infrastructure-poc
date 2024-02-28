@@ -37,3 +37,20 @@ variable "vpc_id" {
 variable "cognito_identifier" {
 
 }
+
+variable "rds_cluster_endpoint" {
+  type = string
+}
+
+variable "db_name" {
+  type = string
+}
+
+variable "db_username" {
+  type = string
+}
+
+variable "rds_password_secret_name"{
+  type = string
+}
+

@@ -156,6 +156,10 @@ resource "aws_rds_cluster" "rds_cluster" {
   }
 }
 
+output "aurora_db_endpoint" {
+  value = aws_rds_cluster.rds_cluster.endpoint
+}
+
 resource "aws_rds_cluster_instance" "cluster_instances" {
   count               = var.instance_count
   identifier          = "${var.account}-rds-aurora-${var.env}-${var.app}-${count.index + 1}"
