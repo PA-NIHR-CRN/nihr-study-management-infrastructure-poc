@@ -41,15 +41,19 @@ module "api_gateway" {
 }
 
 module "lambda" {
-  source             = "./modules/lambda"
-  account            = var.names["${var.env}"]["accountidentifiers"]
-  env                = var.env
-  system             = var.names["system"]
-  memory_size        = var.names["${var.env}"]["lambda_memory"]
-  private_subnet_ids = var.names["${var.env}"]["private_subnet_ids"]
-  retention_in_days  = var.names["${var.env}"]["retention_period"]
-  vpc_id             = var.names["${var.env}"]["vpcid"]
-  cognito_identifier = module.cognito.userpool_endpoint
+  source                      = "./modules/lambda"
+  account                     = var.names["${var.env}"]["accountidentifiers"]
+  env                         = var.env
+  system                      = var.names["system"]
+  memory_size                 = var.names["${var.env}"]["lambda_memory"]
+  private_subnet_ids          = var.names["${var.env}"]["private_subnet_ids"]
+  retention_in_days           = var.names["${var.env}"]["retention_period"]
+  vpc_id                      = var.names["${var.env}"]["vpcid"]
+  cognito_identifier          = module.cognito.userpool_endpoint
+  rds_cluster_endpoint        = module.rds_aurora.aurora_db_endpoint
+  db_name                     = var.names["${var.env}"]["db_name"]
+  db_username                 = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["db-username"]
+  rds_password_secret_name    = var.names["${var.env}"]["rds_password_secret_name"]
 
 }
 
