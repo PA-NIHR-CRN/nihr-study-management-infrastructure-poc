@@ -36,8 +36,8 @@ resource "aws_lambda_function" "study_management_lambda" {
   environment {
     variables = {
       "StudyManagementApi__JwtBearer__Authority"     = "https://${var.cognito_identifier}",
-      "StudyManagementApi__Data__ConnectionString"   = "server=nihrd-rds-aurora-dev-study-management-cluster.cluster-cyufumnedrbx.eu-west-2.rds.amazonaws.com;database=study_management;user=admin",
-      "StudyManagementApi__Data__PasswordSecretName" = "nihrd-secret-dev-rds-aurora-mysql-study-management-admin-password",
+      "StudyManagementApi__Data__ConnectionString"   = "server=${var.rds_cluster_endpoint};database=${var.db_name};user=${var.db_username}",
+      "StudyManagementApi__Data__PasswordSecretName" = var.rds_password_secret_name,
       "StudyManagement__DefaultRoleName"             = "CHIEF_INVESTIGATOR",
       "StudyManagement__DefaultLocalSystemName"      = "EDGE"
 
