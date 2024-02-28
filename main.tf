@@ -52,7 +52,7 @@ module "lambda" {
   cognito_identifier          = module.cognito.userpool_endpoint
   rds_cluster_endpoint        = module.rds_aurora.aurora_db_endpoint
   db_name                     = var.names["${var.env}"]["db_name"]
-  db_username                 = var.names["${var.env}"]["db_username"]
+  db_username                 = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["db-username"]
   rds_password_secret_name    = var.names["${var.env}"]["rds_password_secret_name"]
 
 }

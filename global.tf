@@ -31,7 +31,6 @@ variable "names" {
       "lambda_memory"               = 256
       "retention_period"            = 30
       "provider-name"               = "ORCID"
-      "db_username"                 = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["db-username"]
       "db_name"                     = "study_management"
       "rds_password_secret_name"    = "nihrd-secret-dev-rds-aurora-mysql-study-management-admin-password"
     }
