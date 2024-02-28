@@ -227,86 +227,6 @@ resource "aws_api_gateway_integration_response" "home_authenticated_get_response
   depends_on  = [aws_api_gateway_resource.home_authenticated, aws_api_gateway_method.home_authenticated_get]
 }
 
-
-// Old
-# resource "aws_api_gateway_resource" "main" {
-#   rest_api_id = aws_api_gateway_rest_api.main.id
-#   parent_id   = aws_api_gateway_rest_api.main.root_resource_id
-#   path_part   = "{proxy+}"
-# }
-
-//resource path
-
-# # Define the API Gateway resource for /api/v1/home
-# resource "aws_api_gateway_resource" "home_resource" {
-#   rest_api_id = aws_api_gateway_rest_api.main.id
-#   parent_id   = aws_api_gateway_rest_api.main.root_resource_id
-#   path_part   = "api"
-# }
-
-# resource "aws_api_gateway_resource" "v1_resource" {
-#   rest_api_id = aws_api_gateway_rest_api.main.id
-#   parent_id   = aws_api_gateway_resource.home_resource.id
-#   path_part   = "v1"
-# }
-
-# resource "aws_api_gateway_resource" "home_path_resource" {
-#   rest_api_id = aws_api_gateway_rest_api.main.id
-#   parent_id   = aws_api_gateway_resource.v1_resource.id
-#   path_part   = "home"
-# }
-
-# # Define the API Gateway resource for /api/v1/home/authenticated
-# resource "aws_api_gateway_resource" "authenticated_resource" {
-#   rest_api_id = aws_api_gateway_rest_api.main.id
-#   parent_id   = aws_api_gateway_resource.home_path_resource.id
-#   path_part   = "authenticated"
-# }
-
-# // method
-
-# resource "aws_api_gateway_method" "home_method" {
-#   rest_api_id   = aws_api_gateway_rest_api.main.id
-#   resource_id   = aws_api_gateway_resource.home_path_resource.id
-#   http_method   = "GET"
-#   authorization = "NONE"
-# }
-
-
-# resource "aws_api_gateway_method" "authenticated_method" {
-#   rest_api_id   = aws_api_gateway_rest_api.main.id
-#   resource_id   = aws_api_gateway_resource.authenticated_resource.id
-#   http_method   = "GET"
-#   authorization = "NONE"
-# }
-
-# resource "aws_api_gateway_method" "main" {
-#   rest_api_id   = aws_api_gateway_rest_api.main.id
-#   resource_id   = aws_api_gateway_resource.main.id
-#   http_method   = "ANY"
-#   authorization = "NONE"
-# }
-
-# resource "aws_api_gateway_integration" "main" {
-#   rest_api_id = aws_api_gateway_rest_api.main.id
-#   resource_id = aws_api_gateway_resource.main.id
-#   http_method = aws_api_gateway_method.main.http_method
-#   # method that the api gateway will use to call the lambda - lambdas can only be invoked by POST, even though the gateway method may be a GET
-#   type                    = "AWS_PROXY"
-#   uri                     = var.invoke_lambda_arn
-#   integration_http_method = "POST"
-# }
-
-# resource "aws_api_gateway_method_response" "main" {
-#   rest_api_id = aws_api_gateway_rest_api.main.id
-#   resource_id = aws_api_gateway_resource.main.id
-#   http_method = aws_api_gateway_method.main.http_method
-#   status_code = "200"
-#   depends_on = [
-#     aws_api_gateway_method.main,
-#   ]
-# }
-
 resource "aws_api_gateway_method_settings" "main" {
   rest_api_id = aws_api_gateway_rest_api.main.id
   stage_name  = var.stage_name
@@ -323,22 +243,6 @@ resource "aws_api_gateway_method_settings" "main" {
     throttling_burst_limit = 50
   }
 }
-
-
-# resource "aws_api_gateway_integration_response" "main" {
-#   rest_api_id = aws_api_gateway_rest_api.main.id
-#   resource_id = aws_api_gateway_resource.main.id
-#   http_method = aws_api_gateway_method.main.http_method
-#   status_code = aws_api_gateway_method_response.main.status_code
-
-#   response_templates = {
-#     "application/json" = ""
-#   }
-#   depends_on = [
-#     aws_api_gateway_integration.main,
-#     aws_api_gateway_method_response.main,
-#   ]
-# }
 
 resource "aws_api_gateway_deployment" "main" {
   depends_on  = [aws_api_gateway_integration.identifier_post, aws_api_gateway_integration.identifier_id_get, aws_api_gateway_integration.identifier_id_patch, aws_api_gateway_integration.home_get, aws_api_gateway_integration.home_authenticated_get]
