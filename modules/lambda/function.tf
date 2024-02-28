@@ -21,7 +21,7 @@ resource "aws_security_group" "sg_lambda" {
 resource "aws_lambda_function" "study_management_lambda" {
   function_name = "${var.account}-lambda-${var.env}-${var.system}"
   memory_size   = var.memory_size
-  timeout       = 120
+  timeout       = 60
   handler       = "NIHR.StudyManagement.Api::NIHR.StudyManagement.Api.LambdaEntryPoint::FunctionHandlerAsync"
   publish       = true # don't need this if updating code outside of terrafrom
   filename      = "./modules/.build/lambda_dummy/lambda_dummy.zip"
@@ -35,8 +35,11 @@ resource "aws_lambda_function" "study_management_lambda" {
 
   environment {
     variables = {
-      "StudyManagementApiConfiguration__JwtTokenValidationConfiguration__OverrideJwtTokenValidation" = "false",
-      "StudyManagementApi__JwtBearer__Authority"                                                     = "https://${var.cognito_identifier}"
+      "StudyManagementApi__JwtBearer__Authority"     = "https://${var.cognito_identifier}",
+      "StudyManagementApi__Data__ConnectionString"   = "server=nihrd-rds-aurora-dev-study-management-cluster.cluster-cyufumnedrbx.eu-west-2.rds.amazonaws.com;database=study_management;user=admin",
+      "StudyManagementApi__Data__PasswordSecretName" = "nihrd-secret-dev-rds-aurora-mysql-study-management-admin-password",
+      "StudyManagement__DefaultRoleName"             = "CHIEF_INVESTIGATOR",
+      "StudyManagement__DefaultLocalSystemName"      = "EDGE"
 
     }
   }
