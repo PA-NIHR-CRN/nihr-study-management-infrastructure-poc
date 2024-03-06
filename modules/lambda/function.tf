@@ -39,8 +39,9 @@ resource "aws_lambda_function" "study_management_lambda" {
       "StudyManagementApi__Data__ConnectionString"   = "server=${var.rds_cluster_endpoint};database=${var.db_name};user=${var.db_username}",
       "StudyManagementApi__Data__PasswordSecretName" = var.rds_password_secret_name,
       "StudyManagement__DefaultRoleName"             = "CHIEF_INVESTIGATOR",
-      "StudyManagement__DefaultLocalSystemName"      = "EDGE"
-
+      "StudyManagement__DefaultLocalSystemName"      = "EDGE",
+      "MessageBus__Topic"                            = var.message_bus_topic,
+      "MessageBus__BootstrapServers"                 = var.message_bus_bootstrap_servers
     }
   }
 

@@ -54,3 +54,10 @@ variable "rds_password_secret_name"{
   type = string
 }
 
+variable "message_bus_topic"{
+  type = string
+}
+
+variable "message_bus_bootstrap_servers"{
+}
+
