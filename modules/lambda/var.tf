@@ -59,5 +59,6 @@ variable "message_bus_topic"{
 }
 
 variable "message_bus_bootstrap_servers"{
+  
 }
 
