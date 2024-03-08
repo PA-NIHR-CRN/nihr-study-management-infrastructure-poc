@@ -115,3 +115,9 @@ variable "ingress_rules" {
     description = string
   }))
 }
+
+variable "apply_immediately" {
+  description = "Specifies whether any cluster modifications are applied immediately, or during the next maintenance window. Default is `false`"
+  type        = bool
+  default     = false
+}
