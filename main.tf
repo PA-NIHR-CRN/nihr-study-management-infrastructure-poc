@@ -107,6 +107,7 @@ module "rds_aurora" {
   lambda_sg               = module.lambda.lambda_sg
   odp_db_server_ip        = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["odp-db-server-ip"]
   ingress_rules           = jsondecode(data.aws_secretsmanager_secret_version.terraform_secret_version.secret_string)["ingress_rules"]
+  apply_immediately       = var.names["${var.env}"]["apply_immediately"]
 }
 
 module "cognito" {
