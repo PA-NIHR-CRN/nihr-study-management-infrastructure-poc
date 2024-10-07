@@ -64,6 +64,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    # Might be a better way to determine and use the version 
     - name: Setup Terraform
       uses: autero1/action-terraform@v3.0.1
       with:
